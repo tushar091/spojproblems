@@ -20,9 +20,21 @@ public class Graph {
 		adj[v].add(w);
 	}
 	
+	void printEdgeList(){
+		for(int i = 0;i<adj.length;i++){
+			Iterator<Integer> it = adj[i].listIterator();
+			System.out.print(i + " ");
+			while(it.hasNext()){
+				int v = it.next();
+				System.out.print(v + " ");
+			}
+			System.out.println(" ");
+		}
+	}
+	
 	void dfsUtil(int v,boolean visited[]){
 		visited[v] = true;
-		
+		//System.out.print(v + " ");
 		Iterator<Integer> i = adj[v].listIterator();
 		while(i.hasNext()){
 			v = i.next();
@@ -36,9 +48,10 @@ public class Graph {
 	int dfs(){
 		boolean[] visited = new boolean[V];
 		int c = 0;
-		for(int i = 0;i<V;i++){
+		for(int i = 1;i<V;i++){
 			if(!visited[i]){
 				c++;
+				System.out.print(" ");
 				dfsUtil(i,visited);
 			}
 		}
@@ -49,36 +62,44 @@ public class Graph {
 		Scanner reader = new Scanner(System.in);
 		int n = reader.nextInt();
 		int m = reader.nextInt();
+		int v = 1;
 		int[][] arr = new int[n][m];
 		for(int i = 0;i<n;i++){
 			for(int j=0;j<m;j++){
 				arr[i][j] = reader.nextInt();
+				if(arr[i][j] == 1){
+					arr[i][j] = v++;
+				}
 			}
 		}
-		System.out.println(n + " " + m);
-		Graph g = new Graph(m*n + 1);
+		Graph g = new Graph(v);
 		int count = 0;
 		for(int i = 0;i<n;i++){
-			for(int j=0;j<m;j++){
-				if(arr[i][j] == 1){
-					g.addEdge(i*j + i + n, i*j + i + n);
-				}
-				if(i< m-1 && arr[i+1][j] == 1){
-					g.addEdge((i)*j + i + n, (i+1)*j + i + n);
-				}
-				if(j < n-1 && arr[i][j+1] == 1){
-					g.addEdge((i)*j + i + n, (i)*(j+1) + i + n);
-				}
-				if(i>0 && arr[i-1][j] == 1){
-					g.addEdge((i)*j + i + n, (i-1)*j + i + n);
-				}
-				if(j>0 && arr[i][j-1] == 1){
-					g.addEdge((i)*(j) + i + n, i*(j-1) + i + n);
+			for(int j = 0;j<m;j++){
+				if(arr[i][j] >= 1){
+					g.addEdge(arr[i][j], arr[i][j]);
+					if(i< m-1 && arr[i+1][j] >= 1){
+						g.addEdge(arr[i][j], arr[i+1][j]);
+						//System.out.println("add edge " + arr[i][j] + " " + arr[i+1][j]);
+					}
+					if(j < n-1 && arr[i][j+1] >= 1){
+						g.addEdge(arr[i][j], arr[i][j+1]);
+						//System.out.println("add edge " + arr[i][j] + " " + arr[i][j+1]);
+					}
+					if(i>0 && arr[i-1][j] >= 1){
+						g.addEdge(arr[i][j], arr[i-1][j]);
+						//System.out.println("add edge " + arr[i][j] + " " + arr[i-1][j]);
+					}
+					if(j>0 && arr[i][j-1] >= 1){
+						g.addEdge(arr[i][j], arr[i][j-1]);
+						//System.out.println("add edge " + arr[i][j] + " " + arr[i][j-1]);
+					}
 				}
 			}
 		}
+		//g.printEdgeList();
 		int ct = g.dfs();
-		System.out.println(" ct  = " +  ct);
+		System.out.println(ct);
 	}
 	
 }
