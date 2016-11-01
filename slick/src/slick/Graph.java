@@ -72,6 +72,7 @@ public class Graph {
 	public static void main(String args[]){
 		while(true){
 			Scanner reader = new Scanner(System.in);
+			while(true){
 			int n = reader.nextInt();
 			int m = reader.nextInt();
 			if(n == 0 && m == 0){
@@ -120,7 +121,9 @@ public class Graph {
 				  int key = entry.getKey();
 				  int value = entry.getValue();
 				  System.out.println(key + " " + value);
-				}
+			}
+			countMap.clear();
+		}
 		}
 	}
 	
