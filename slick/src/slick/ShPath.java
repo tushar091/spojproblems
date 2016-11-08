@@ -33,7 +33,14 @@ public class ShPath {
 				}
 			}
 		}
+		
+		printSolution(dist);
 
+	}
+	
+	public void printSolution(int[] dist){
+		for (int i = 0; i < V; i++)
+			System.out.println(i+" \t\t "+dist[i]);
 	}
 
 	public static void main(String[] args) {
@@ -50,22 +57,27 @@ public class ShPath {
 			for (int i = 0; i < n; i++) {
 				scan.nextLine();
 				String name = scan.nextLine();
-				//scan.nextLine();
+				// scan.nextLine();
 				nameInt.put(name, i);
 				int count = scan.nextInt();
 				while (count > 0) {
 					count--;
 					int a = scan.nextInt();
 					int b = scan.nextInt();
-					graph[i][a-1] = b;
+					graph[i][a - 1] = b;
 				}
 
 			}
+			int ra = scan.nextInt();
+			scan.nextLine();
 			String s = scan.nextLine();
 			String[] s1 = s.split(" ");
-			sh.djiskstra(graph, nameInt.get(s1[0]));
-			for(int i = 0;i<n;i++){
-				for(int j = 0;j<n;j++){
+			sh.V = n;
+			for (int i = 0; i < V; i++) {
+				sh.djiskstra(graph, i);
+			}
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
 					System.out.print(graph[i][j] + " ");
 				}
 				System.out.println("");
