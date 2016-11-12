@@ -1,16 +1,26 @@
 package slick;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class ShPath {
 	public static int V = 0;
+	public static HashMap<Integer, ArrayList<Integer>> soln = new HashMap();
 
 	/*
 	 * returns index of minimum distance vertex
 	 */
 	int minDistance(int[] dist, Boolean spSet[]) {
-		return 0;
+		int min = Integer.MAX_VALUE, min_index = -1;
+
+		for (int v = 0; v < V; v++)
+			if (spSet[v] == false && dist[v] <= min) {
+				min = dist[v];
+				min_index = v;
+			}
+
+		return min_index;
 	}
 
 	void djiskstra(int graph[][], int src) {
@@ -26,21 +36,23 @@ public class ShPath {
 
 		for (int count = 0; count < V - 1; count++) {
 			int u = minDistance(dist, spSet);
-
+			spSet[u] = true;
 			for (int v = 0; v < V; v++) {
-				if (!spSet[v] && graph[u][v] != 0 && dist[u] + graph[u][v] < dist[v] && dist[v] != Integer.MAX_VALUE) {
+				if (!spSet[v] && graph[u][v] != 0 && dist[u] + graph[u][v] < dist[v] && dist[u] != Integer.MAX_VALUE) {
 					dist[v] = dist[u] + graph[u][v];
 				}
 			}
 		}
-		
-		printSolution(dist);
+
+		printSolution(dist, src);
 
 	}
-	
-	public void printSolution(int[] dist){
+
+	public void printSolution(int[] dist, int src) {
+		ArrayList<Integer> alist = new ArrayList();
 		for (int i = 0; i < V; i++)
-			System.out.println(i+" \t\t "+dist[i]);
+			alist.add(dist[i]);
+		soln.put(src, alist);
 	}
 
 	public static void main(String[] args) {
@@ -68,14 +80,21 @@ public class ShPath {
 				}
 
 			}
+			for (int i = 0; i < V; i++) {
+				sh.djiskstra(graph, i);
+			}
 			int ra = scan.nextInt();
+			for (int i = 0; i < ra; i++) {
+				String s = scan.nextLine();
+				String[] s1 = s.split(" ");
+				ArrayList<Integer> ans = soln.get(nameInt.get(s1[0]));
+				System.out.println(ans.get(nameInt.get(s1[1])));
+			}
 			scan.nextLine();
 			String s = scan.nextLine();
 			String[] s1 = s.split(" ");
 			sh.V = n;
-			for (int i = 0; i < V; i++) {
-				sh.djiskstra(graph, i);
-			}
+
 			for (int i = 0; i < n; i++) {
 				for (int j = 0; j < n; j++) {
 					System.out.print(graph[i][j] + " ");
