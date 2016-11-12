@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class ShPath {
+class ShPath {
 	public static int V = 0;
 	public static HashMap<Integer, ArrayList<Integer>> soln = new HashMap();
 
@@ -33,9 +33,8 @@ public class ShPath {
 			spSet[i] = false;
 		}
 		dist[src] = 0;
-
-		for (int count = 0; count < V - 1; count++) {
-			int u = minDistance(dist, spSet);
+		int u;
+		while ((u = minDistance(dist, spSet)) != -1) {
 			spSet[u] = true;
 			for (int v = 0; v < V; v++) {
 				if (!spSet[v] && graph[u][v] != 0 && dist[u] + graph[u][v] < dist[v] && dist[u] != Integer.MAX_VALUE) {
@@ -79,14 +78,14 @@ public class ShPath {
 
 			}
 			sh.V = n;
-			for (int i = 0; i < V; i++) {
-				sh.djiskstra(graph, i);
-			}
 			int ra = scan.nextInt();
 			scan.nextLine();
 			for (int i = 0; i < ra; i++) {
 				String s = scan.nextLine();
 				String[] s1 = s.split(" ");
+				if (soln.get(nameInt.get(s1[0])) == null) {
+					sh.djiskstra(graph, nameInt.get(s1[0]));
+				}
 				ArrayList<Integer> ans = soln.get(nameInt.get(s1[0]));
 				System.out.println(ans.get(nameInt.get(s1[1])));
 			}
