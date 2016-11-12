@@ -89,6 +89,7 @@ class ShPath {
 				ArrayList<Integer> ans = soln.get(nameInt.get(s1[0]));
 				System.out.println(ans.get(nameInt.get(s1[1])));
 			}
+			scan.nextLine();
 		}
 	}
 
