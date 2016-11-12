@@ -43,9 +43,7 @@ public class ShPath {
 				}
 			}
 		}
-
 		printSolution(dist, src);
-
 	}
 
 	public void printSolution(int[] dist, int src) {
@@ -80,26 +78,17 @@ public class ShPath {
 				}
 
 			}
+			sh.V = n;
 			for (int i = 0; i < V; i++) {
 				sh.djiskstra(graph, i);
 			}
 			int ra = scan.nextInt();
+			scan.nextLine();
 			for (int i = 0; i < ra; i++) {
 				String s = scan.nextLine();
 				String[] s1 = s.split(" ");
 				ArrayList<Integer> ans = soln.get(nameInt.get(s1[0]));
 				System.out.println(ans.get(nameInt.get(s1[1])));
-			}
-			scan.nextLine();
-			String s = scan.nextLine();
-			String[] s1 = s.split(" ");
-			sh.V = n;
-
-			for (int i = 0; i < n; i++) {
-				for (int j = 0; j < n; j++) {
-					System.out.print(graph[i][j] + " ");
-				}
-				System.out.println("");
 			}
 		}
 	}
